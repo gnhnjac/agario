@@ -122,7 +122,6 @@ function main() {
   for (oplayer of otherPlayers) {
 
     oplayer.show(ctx);
-    oplayer.r = Math.sqrt(oplayer.mass / Math.PI) * 40;
 
   }
 
