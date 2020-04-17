@@ -73,7 +73,7 @@ function secondOperations() {
     }
   }
 
-  // io.emit('Players', players)
+  io.emit('Players', players)
 
 }
 
