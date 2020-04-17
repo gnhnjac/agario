@@ -58,21 +58,13 @@ function findPlayerIndex(id) {
 
 function secondOperations() {
 
-  // if (blobs.length < maxBlobs) {
-  //   blobs.push({
-  //     x: getRandomInt(-actualWidth / 2, actualWidth / 2),
-  //     y: getRandomInt(-actualHeight / 2, actualHeight / 2),
-  //     color: 'hsl(' + Math.floor(255 * Math.random()) + ',100%,50%)'
-  //   });
-  // }
-
   for (player of players) {
     if (player.m > player.omass + player.mass / 20000) {
       player.m -= player.mass / 20000;
     }
   }
 
-  io.emit('Players', players)
+  io.emit('Players', players);
 
 }
 
@@ -162,9 +154,7 @@ io.on('connection', (socket) => {
 
         let side2 = otherplayer.y - player.y;
 
-        let otherplayerR = Math.sqrt(otherplayer.m / Math.PI) * 40;
-
-        if (Math.sqrt(side1 * side1 + side2 * side2) < playerR && playerR > otherplayerR + otherplayerR / 4) {
+        if (Math.sqrt(side1 * side1 + side2 * side2) < playerR && player.m > otherplayer.m * 1.25) {
 
           player.m += otherplayer.m;
 
