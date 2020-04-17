@@ -2,7 +2,7 @@ const express = require('express');
 const socket = require('socket.io');
 require('dotenv').config()
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 var app = express();
 
