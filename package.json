@@ -2,10 +2,7 @@
   "name": "agario",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "me",
+  "author": "gnhnjac",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
@@ -13,5 +10,8 @@
     "socket.io": "^2.3.0"
   },
   "devDependencies": {},
-  "description": ""
+  "description": "",
+  "scripts": {
+		"start": "node index.js"
+	}
 }

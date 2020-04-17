@@ -1,20 +1,20 @@
 const express = require('express');
-var app = express();
-var server = require('http').createServer(app);
-
-var io = require('socket.io')(server);
-
+const socket = require('socket.io');
 require('dotenv').config()
 
 const port = process.env.PORT;
 
-server.listen(port, () => {
+var app = express();
+
+var server = app.listen(port, () => {
 
   console.log('listening on port ' + port);
 
 });
 
 app.use(express.static('public'));
+
+var io = socket(server);
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
