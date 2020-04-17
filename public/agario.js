@@ -43,8 +43,7 @@ var button = document.getElementById("startbtn");
 button.addEventListener('click', () => {
 
   btn.innerHTML = "";
-
-  socket.emit('playerData', player);
+  
   setInterval(main, 10);
 
 });
