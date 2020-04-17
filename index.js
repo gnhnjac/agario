@@ -22,8 +22,8 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-let actualWidth = process.env.MAP_WIDTH;
-let actualHeight = process.env.MAP_HEIGHT;
+let actualWidth = 30000;
+let actualHeight = 30000;
 
 let blobs = [];
 let eaten_blob_indices = [];
