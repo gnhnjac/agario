@@ -84,8 +84,8 @@ io.on('connection', (socket) => {
   console.log('New connection from', socket.id);
 
   let newPlayer = {
-    x: 0,
-    y: 0,
+    x: random(-actualWidth/2, actualWidth/2),
+    y: random(-actualHeight/2, actualHeight/2),
     m: 5,
     omass: 5,
     color: 'hsl(' + Math.floor(255 * Math.random()) + ',100%,50%)',
@@ -170,8 +170,8 @@ io.on('connection', (socket) => {
           player.m += otherplayer.m;
 
           let newPlayer = {
-            x: 0,
-            y: 0,
+            x: random(-actualWidth/2, actualWidth/2),
+            y: random(-actualHeight/2, actualHeight/2),
             m: 5,
             omass: 5,
             color: 'hsl(' + Math.floor(255 * Math.random()) + ',100%,50%)',
