@@ -86,6 +86,16 @@ socket.on('blobData', (data) => {
 
 });
 
+socket.on('eatenBlobs', (data) => {
+
+  for(index of data) {
+
+    blobs.splice(index, 1);
+
+  }
+
+});
+
 function main() {
 
   ctx.fillStyle = 'white';

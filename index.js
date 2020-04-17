@@ -27,6 +27,7 @@ let actualWidth = process.env.MAP_WIDTH;
 let actualHeight = process.env.MAP_HEIGHT;
 
 let blobs = [];
+let eaten_blob_indices = [];
 let players = [];
 
 let maxBlobs = process.env.FOOD;
@@ -58,13 +59,13 @@ function findPlayerIndex(id) {
 
 function secondOperations() {
 
-  if (blobs.length < maxBlobs) {
-    blobs.push({
-      x: getRandomInt(-actualWidth / 2, actualWidth / 2),
-      y: getRandomInt(-actualHeight / 2, actualHeight / 2),
-      color: 'hsl(' + Math.floor(255 * Math.random()) + ',100%,50%)'
-    });
-  }
+  // if (blobs.length < maxBlobs) {
+  //   blobs.push({
+  //     x: getRandomInt(-actualWidth / 2, actualWidth / 2),
+  //     y: getRandomInt(-actualHeight / 2, actualHeight / 2),
+  //     color: 'hsl(' + Math.floor(255 * Math.random()) + ',100%,50%)'
+  //   });
+  // }
 
   for (player of players) {
     if (player.m > player.omass + player.mass / 20000) {
@@ -72,7 +73,7 @@ function secondOperations() {
     }
   }
 
-  io.emit('Players', players)
+  // io.emit('Players', players)
 
 }
 
@@ -95,6 +96,8 @@ io.on('connection', (socket) => {
   players.push(newPlayer);
 
   socket.emit('playerData', newPlayer);
+
+  socket.emit('blobData', blobs);
 
   socket.on('mouseData', (data) => {
 
@@ -141,6 +144,7 @@ io.on('connection', (socket) => {
         if (Math.sqrt(side1 * side1 + side2 * side2) < playerR + Math.sqrt(1 / Math.PI) * 40) {
 
           blobs.splice(index, 1);
+          eaten_blob_indices.push(index);
 
           player.m += 1;
 
@@ -187,7 +191,9 @@ io.on('connection', (socket) => {
     }
 
     socket.emit('playerData', player);
-    io.emit('blobData', blobs);
+    io.emit('eatenBlobs', eaten_blob_indices);
+
+    eaten_blob_indices = [];
 
   })
 
