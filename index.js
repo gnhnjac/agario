@@ -118,8 +118,8 @@ io.on('connection', (socket) => {
     vel.x /= velMag;
     vel.y /= velMag;
 
-    vel.x *= 2.2 * Math.pow(playerR, -0.439)*20;
-    vel.y *= 2.2 * Math.pow(playerR, -0.439)*20;
+    vel.x *= 2.2 * Math.pow(playerR, -0.439)*40;
+    vel.y *= 2.2 * Math.pow(playerR, -0.439)*40;
 
     player.x += vel.x;
     player.y += vel.y;
