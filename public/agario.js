@@ -148,7 +148,7 @@ function main() {
   ctx.fillStyle = 'black';
   ctx.font = "bold 30px Helvetica";
 
-  ctx.fillText("LeaderBoard", canvas.width-295, 30);
+  ctx.fillText("Leaderboard", canvas.width-295, 30);
 
   for (let i = 0; i < leaderboard.length; i++) {
 
