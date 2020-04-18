@@ -179,7 +179,61 @@ playerData.prototype.checkEat = function (otherplayer) {
 
 }
 
+function Leaderboard() {
+
+  this.board = [];
+
+}
+
+Leaderboard.prototype.add = function(name, score, id) {
+
+  this.board.push({name: name, score: score, id: id});
+
+}
+
+Leaderboard.prototype.remove = function(id) {
+
+  let index = 0;
+  for (player of this.board) {
+
+    if (player.id == id) {
+      this.board.splice(index, 1);
+    }
+
+    index++;
+
+  }
+
+}
+
+Leaderboard.prototype.update = function(id, score) {
+
+  let index = 0;
+  for (player of this.board) {
+
+    if (player.id == id) {
+      player.score = Math.floor(score);
+    }
+
+    index++;
+
+  }
+
+}
+
+Leaderboard.prototype.organize = function() {
+
+  this.board.sort(function(a, b) {
+
+    return (a.score < b.score);
+
+  });
+
+}
+
 var io = socket(server);
+
+let leaderboard = new Leaderboard();
 
 let actualWidth = 30000;
 let actualHeight = 30000;
@@ -217,6 +271,9 @@ function secondOperations() {
     player.shrink();
   }
 
+  io.emit('leaderboardData', leaderboard.board);
+  leaderboard.organize();
+
 }
 
 setInterval(secondOperations, 1000);
@@ -230,6 +287,8 @@ io.on('connection', (socket) => {
     let newPlayer = new playerData(socket.id, data.name, data.canvas.w, data.canvas.h);
 
     players.push(newPlayer);
+
+    leaderboard.add(data.name, 5, socket.id);
 
     socket.emit('playerData', newPlayer);
 
@@ -285,6 +344,8 @@ io.on('connection', (socket) => {
 
     }
 
+    leaderboard.update(player.id, player.m);
+
     socket.emit('playerData', player);
     io.emit('eatenBlobs', eaten_blob_indices);
     io.emit('Players', players);
@@ -295,6 +356,8 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log(socket.id, "has disconnected");
+
+    leaderboard.remove(socket.id);
     players.splice(findPlayerIndex(socket.id), 1);
   });
 

@@ -16,6 +16,8 @@ let player = new Player(0, 0, 5, 0, 'a');
 
 let otherPlayers = [];
 
+let leaderboard = [];
+
 let mouseX = null;
 let mouseY = null;
 
@@ -95,6 +97,12 @@ socket.on('eatenBlobs', (data) => {
 
 });
 
+socket.on('leaderboardData', (data)=> {
+
+  leaderboard=data;
+
+})
+
 function main() {
 
   ctx.fillStyle = 'white';
@@ -130,6 +138,23 @@ function main() {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
 
   map.show(ctx, player.pos.x, player.pos.y, player.r, actualWidth, actualHeight);
+
+  ctx.fillStyle = "rgba(57, 59, 60, 0.3)";
+
+  ctx.rect(canvas.width-350, 0, 300, 400);
+
+  ctx.fill();
+
+  ctx.fillStyle = 'black';
+  ctx.font = "bold 30px Helvetica";
+
+  ctx.fillText("LeaderBoard", canvas.width-295, 30);
+
+  for (let i = 0; i < leaderboard.length; i++) {
+
+    ctx.fillText(i+1+". "+leaderboard[i].name+": "+leaderboard[i].score, canvas.width-340, 70+i*30);
+
+  }
 
   socket.emit('mouseData', {
     mX: mouseX,
