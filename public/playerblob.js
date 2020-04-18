@@ -8,8 +8,6 @@ class Player extends BlobBody {
 
     this.name = name;
 
-    this.won = false;
-
   }
 
 }
@@ -18,7 +16,7 @@ Player.prototype.show = function(ctx) {
 
   ctx.beginPath();
 
-  this.r = Math.sqrt(player.mass / Math.PI) * 40;
+  this.r = Math.sqrt(this.mass / Math.PI) * 40;
 
   ctx.fillStyle = this.color;
   ctx.arc(this.pos.x, this.pos.y, this.r, 0, 2 * Math.PI);
@@ -42,8 +40,8 @@ Player.prototype.show = function(ctx) {
 
 Player.prototype.setData = function(data) {
 
-  this.pos.x = data.x;
-  this.pos.y = data.y;
+  this.pos.x = data.pos.x;
+  this.pos.y = data.pos.y;
   this.mass = data.m;
   this.color = data.color;
   this.id = data.id;

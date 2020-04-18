@@ -60,8 +60,9 @@ socket.on('Players', (data) => {
 
     if (data[i].id != player.id) {
 
-      let newPlayer = new Player(data[i].x, data[i].y, data[i].m, data[i].id, data[i].name);
+      let newPlayer = new Player(data[i].pos.x, data[i].pos.y, data[i].m, data[i].id, data[i].name);
       newPlayer.color = data[i].color;
+      newPlayer.originalR = data.originalR;
 
       otherPlayers.push(newPlayer);
 
