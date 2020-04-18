@@ -26,11 +26,7 @@ document.addEventListener('mousemove', (e) => {
 
 });
 
-const urlParams = new URLSearchParams(window.location.search);
-let name = urlParams.get('name') || 'Player';
-
 var socket = io();
-
 
 var startDiv = document.getElementById("start");
 var nameStr = document.getElementById("name");
