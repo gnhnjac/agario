@@ -29,21 +29,24 @@ document.addEventListener('mousemove', (e) => {
 const urlParams = new URLSearchParams(window.location.search);
 let name = urlParams.get('name') || 'Player';
 
-var socket = io({
-  query: 'name='+name
-});
+var socket = io();
 
 
-var btn = document.getElementById("send");
-
-btn.innerHTML = "<button id='startbtn' style='text-align: center'>START</button>"
-
+var startDiv = document.getElementById("start");
+var nameStr = document.getElementById("name");
 var button = document.getElementById("startbtn");
 
 button.addEventListener('click', () => {
 
-  btn.innerHTML = "";
-  
+  socket.emit('init', {
+    name: nameStr.value || 'Player', canvas: {
+      w: canvas.width,
+      h: canvas.height
+    }
+  });
+
+  startDiv.innerHTML = "";
+
   setInterval(main, 10);
 
 });
@@ -87,7 +90,7 @@ socket.on('blobData', (data) => {
 
 socket.on('eatenBlobs', (data) => {
 
-  for(index of data) {
+  for (index of data) {
 
     blobs.splice(index, 1);
 
@@ -134,10 +137,6 @@ function main() {
   socket.emit('mouseData', {
     mX: mouseX,
     mY: mouseY,
-    canvas: {
-      w: canvas.width,
-      h: canvas.height
-    }
   });
 
 }

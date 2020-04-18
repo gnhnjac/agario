@@ -74,21 +74,26 @@ io.on('connection', (socket) => {
 
   console.log('New connection from', socket.id);
 
-  let newPlayer = {
-    x: getRandomInt(-actualWidth / 2, actualWidth / 2),
-    y: getRandomInt(-actualHeight/2, actualHeight/2),
-    m: 5,
-    omass: 5,
-    color: 'hsl(' + Math.floor(255 * Math.random()) + ',100%,50%)',
-    id: socket.id,
-    name: socket.handshake.query.name
-  };
+  socket.on('init', (data) => {
 
-  players.push(newPlayer);
+    let newPlayer = {
+      x: getRandomInt(-actualWidth / 2, actualWidth / 2),
+      y: getRandomInt(-actualHeight/2, actualHeight/2),
+      m: 5,
+      omass: 5,
+      color: 'hsl(' + Math.floor(255 * Math.random()) + ',100%,50%)',
+      id: socket.id,
+      name: data.name,
+      canvas: {w: data.canvas.w, h: data.canvas.h}
+    };
+  
+    players.push(newPlayer);
+  
+    socket.emit('playerData', newPlayer);
+  
+    socket.emit('blobData', blobs);
 
-  socket.emit('playerData', newPlayer);
-
-  socket.emit('blobData', blobs);
+  })
 
   socket.on('mouseData', (data) => {
 
@@ -111,7 +116,7 @@ io.on('connection', (socket) => {
       player.y = actualHeight / 2;
     }
 
-    let vel = {x: data.mX - data.canvas.w / 2, y: data.mY - data.canvas.h / 2};
+    let vel = {x: data.mX - player.canvas.w / 2, y: data.mY - player.canvas.h / 2};
 
     let velMag = Math.sqrt(vel.x*vel.x + vel.y*vel.y);
 
@@ -165,7 +170,8 @@ io.on('connection', (socket) => {
             omass: 5,
             color: 'hsl(' + Math.floor(255 * Math.random()) + ',100%,50%)',
             id: otherplayer.id,
-            name: otherplayer.name
+            name: otherplayer.name,
+            canvas: otherplayer.canvas
           };
 
           players[index] = newPlayer;
