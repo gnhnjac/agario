@@ -4,7 +4,7 @@ Agar.io with canvas graphics and socket.io by ~gnhnjac
 
 To run must have the following npm modules installed:
 
-socket.io <br/>
+socket.io
 express
 
 (you also need node.js installed)
